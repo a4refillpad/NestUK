@@ -28,16 +28,15 @@ Enter file contents here/**
  *         setFahrenheit
  *         setCelsius
  *
- * 2) If you want to switch from slider controls to buttons, comment out the slider details line and uncomment the button details line.
- *
- * 3) Create a new device (https://graph-eu01-euwest1.api.smartthings.com/device/list)
+ * 
+ * 2) Create a new device (https://graph-eu01-euwest1.api.smartthings.com/device/list)
  *     Name: Your Choice
  *     Device Network Id: Your Choice
  *     Type: Nest (should be the last option)
  *     Location: Choose the correct location
  *     Hub/Group: Leave blank
  *
- * 4) Update device preferences
+ * 3) Update device preferences
  *     Click on the new device to see the details.
  *     Click the edit button next to Preferences
  *     Fill in your information.
@@ -45,7 +44,7 @@ Enter file contents here/**
  *     you want to control. Under settings, go to Technical Info. Your serial number is
  *     the second item.
  *
- * 5) That's it, you're done.
+ * 4) That's it, you're done.
  *
  * Copyright (C) 2013 Brian Steere <dianoga7@3dgo.net>
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -113,13 +112,8 @@ metadata {
     				attributeState("idle", backgroundColor:"#44b621")
     				attributeState("heating", backgroundColor:"#ff871d")
             }
-            /*
-			tileAttribute("device.presence", key: "OPERATING_STATE") {
-    				attributeState("not present", label:'Away', backgroundColor:"#1e9cbb")
-            }
-            */
-            
-  			tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
+    
+    			tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
     				attributeState("off", label:'${name}')
     				attributeState("heat", label:'${name}')
     				attributeState("auto", label:'${name}')
@@ -142,7 +136,7 @@ metadata {
 			state "not present", label:'Away', action:"present", icon: "https://raw.githubusercontent.com/a4refillpad/media/master/icon_nest_away.png"
 		}
         
-        standardTile("thermostatOperatingState", "device.thermostatOperatingState", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+	        standardTile("thermostatOperatingState", "device.thermostatOperatingState", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "idle", action:"polling.poll", label:'${name}', icon: "https://raw.githubusercontent.com/a4refillpad/media/master/nest_thermostat_leaf_icon.jpg"
 			state "heating", action:"polling.poll", label:"heat", icon: "https://raw.githubusercontent.com/a4refillpad/media/master/nest_thermostat_heat_icon.jpg"
 		}
@@ -152,23 +146,9 @@ metadata {
 			state "default", action:"polling.poll", icon:"st.secondary.refresh"
 		}
 
-	/*	standardTile("temperatureUnit", "device.temperatureUnit", width: 2, height: 2, decoration: "flat", inactiveLabel: false) {
-			state "fahrenheit",  label: "Farenheit", action:"setCelsius", icon: "st.Weather.weather2" 
-			state "celsius", label: "Celsius", action:"setFahrenheit", icon: "st.Weather.weather2"
-		}
-*/
 		main(["temperature", "thermostatOperatingState", "humidity"])
 
-		// ============================================================
-		// Slider or Buttons...
-		// To expose buttons, comment out the first detials line below and uncomment the second details line below.
-		// To expose sliders, uncomment the first details line below and comment out the second details line below.
-
-//		details(["temperature", "heatingSetpointUp", "thermostatOperatingState", "presence", "heatingSetpoint", "temperatureUnit", "refresh", "heatingSetpointDown"])
 		details(["temperature", "heatSliderControl", "presence", "thermostatOperatingState", "refresh"])
-
-
-		// ============================================================
 
 	}
 
