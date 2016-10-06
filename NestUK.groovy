@@ -87,7 +87,8 @@ metadata {
 		command "setFahrenheit"
 		command "setCelsius"
 
-		attribute "temperatureUnit", "string"
+		attribute "temperatureUnit", "string"	
+        attribute "temperature", "string"
 	}
 
 	simulator {
@@ -137,8 +138,8 @@ metadata {
 		}
         
 	        standardTile("thermostatOperatingState", "device.thermostatOperatingState", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-			state "idle", action:"polling.poll", label:'${name}', icon: "https://raw.githubusercontent.com/a4refillpad/media/master/nest_thermostat_leaf_icon.jpg"
-			state "heating", action:"polling.poll", label:"heat", icon: "https://raw.githubusercontent.com/a4refillpad/media/master/nest_thermostat_heat_icon.jpg"
+			state "idle", action:"setCelsius", label:'${name}', icon: "https://raw.githubusercontent.com/a4refillpad/media/master/nest_thermostat_leaf_icon.jpg"
+			state "heating", action:"setCelsius", label:"heat", icon: "https://raw.githubusercontent.com/a4refillpad/media/master/nest_thermostat_heat_icon.jpg"
 		}
 
 
@@ -148,7 +149,7 @@ metadata {
 
 		main(["temperature", "thermostatOperatingState", "humidity"])
 
-		details(["temperature", "heatSliderControl", "presence", "thermostatOperatingState", "refresh"])
+		details(["temperature", "heatSliderControl", "presence", "thermostatOperatingState", "refresh", "temperature1"])
 
 	}
 
@@ -165,7 +166,7 @@ def setHeatingSetpoint(temp) {
 	def temperatureUnit = device.latestValue('temperatureUnit')
     
     log.debug "Thermostat mode " + latestThermostatMode
-
+	
 	switch (temperatureUnit) {
 		case "celsius":
 			if (temp) {
@@ -304,9 +305,11 @@ def poll() {
 
 		def temperatureUnit = device.latestValue('temperatureUnit')
 
+
 		switch (temperatureUnit) {
 			case "celsius":
-				def temperature = 0.1*(Math.round(data.shared.current_temperature/0.1))-0.5
+				def temperature = 0.01*(Math.round(data.shared.current_temperature/0.01))
+//				def temperature = 0.1*(Math.round(data.shared.current_temperature/0.1))-0.5
     
 				def targetTemperature = 0.1*(Math.round(data.shared.target_temperature/0.1))
 
@@ -325,7 +328,7 @@ def poll() {
 				sendEvent(name: 'heatingSetpoint', value: heatingSetpoint, unit: temperatureUnit, state: "heat")
 				break;
 			default: 
-				def temperature = 0.5*(Math.round((cToF(data.shared.current_temperature))/0.5))
+				def temperature = 0.1*(Math.round((cToF(data.shared.current_temperature))/0.1))
 				def targetTemperature = 0.5*(Math.round((cToF(data.shared.target_temperature))/0.5))
 
 				if (temperatureType == "cool") {
@@ -459,3 +462,4 @@ def cToF(temp) {
 def fToC(temp) {
 	return ((temp - 32) / 1.8).toDouble()
 }
+
