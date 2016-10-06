@@ -9,7 +9,7 @@
  * =========================================
  * 1) Create a new device type (https://graph-eu01-euwest1.api.smartthings.com/ide/devices)
  *     Name: Nest
- *     Author: dianoga7@3dgo.net : tweaked by wayne :) Feb 2016
+ *     Author: dianoga7@3dgo.net : tweaked by wayne :) Oct 2016
  *     Capabilities:
  *         Polling
  *         Relative Humidity Measurement
