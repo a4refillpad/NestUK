@@ -88,7 +88,7 @@ metadata {
 		command "setCelsius"
 
 		attribute "temperatureUnit", "string"	
-        attribute "temperature", "string"
+        	attribute "temperature", "string"
 	}
 
 	simulator {
